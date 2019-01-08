@@ -1,10 +1,26 @@
 const express = require("express");
-const os = require("os");
 const app = express();
+const cors = require('cors');
+const bodyParser = require("body-parser")
+const db = require("../database/data.js");
+
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false}))
+
+app.use(cors())
+
+app.use(express.static("public"));
+
+app.get("/faqs", (req, res) => {
+  db.Faq.find({},(err,faqs) => {
+    if (err) {
+      console.log(err)
+      res.send(err)
+    }
+    else res.send(faqs);
+  })
+
+})
 
 
-app.use(express.static("dist"));
-app.get("/api/getUsername", (req, res) =>
-  res.send({ username: os.userInfo().username })
-);
 app.listen(3000, () => console.log("Listening on port 3000!"));
