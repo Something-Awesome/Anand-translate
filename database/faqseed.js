@@ -517,3 +517,8 @@ data.Faq.insertMany(mockFaq, (err) => {
   }
 })
 
+data.Faq.find({},(err,faqs) => {
+	if (err) return console.error(err);
+	console.log(faqs);
+})
+
